@@ -1,10 +1,15 @@
 import type { Routes } from '@angular/router';
+import { FavoritesButton } from './shared/features/favorites-button/favorites-button';
+import { SearchBar } from './shared/features/search-bar/search-bar';
 import { Layout } from './shared/layout/layout';
 
 export const routes: Routes = [
     {
         path: '',
         component: Layout,
-        children: [],
+        children: [
+            { path: '', component: SearchBar, outlet: 'headerSearch' },
+            { path: '', component: FavoritesButton, outlet: 'headerActions' },
+        ],
     },
 ];
