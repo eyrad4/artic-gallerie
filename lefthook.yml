@@ -1,0 +1,28 @@
+pre-commit:
+    parallel: true
+    commands:
+        biome:
+            glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc,html,css,scss}"
+            run: >
+                npx @biomejs/biome check --write
+                --no-errors-on-unmatched
+                --files-ignore-unknown=true
+                --colors=off
+                --diagnostic-level=error
+                {staged_files}
+            stage_fixed: true
+
+pre-push:
+    parallel: true
+    commands:
+        biome-full-check:
+            glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc,html,css,scss}"
+            run: >
+                npx @biomejs/biome check
+                --no-errors-on-unmatched
+                --files-ignore-unknown=true
+                --diagnostic-level=warn
+                {push_files}
+
+        angular-tests:
+            run: npx ng test --watch=false
