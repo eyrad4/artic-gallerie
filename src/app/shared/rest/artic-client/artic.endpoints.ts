@@ -1,0 +1,22 @@
+import { InjectionToken } from '@angular/core';
+import type { EndpointProvider } from '../../../core/rest/rest-query-client';
+import { ArticArtworkResponse } from './artic-details';
+import { ArticArtworksParams, ArticArtworksResponse } from './artic-list';
+
+export type ArticEndpointMap = {
+    artworks: { response: ArticArtworksResponse; params: ArticArtworksParams };
+    'artworks/:id': { response: ArticArtworkResponse; params: { id: number } };
+};
+
+export const ARTIC_BASE_URL = new InjectionToken<string>('ARTIC_BASE_URL', {
+    providedIn: 'root',
+    factory: () => 'https://api.artic.edu/api/v1',
+});
+
+export const ARTIC_ENDPOINTS = new InjectionToken<EndpointProvider<ArticEndpointMap>>('ARTIC_ENDPOINTS', {
+    providedIn: 'root',
+    factory: () => ({
+        artworks: '/artworks',
+        'artworks/:id': ({ id }) => `/artworks/${id}`,
+    }),
+});
