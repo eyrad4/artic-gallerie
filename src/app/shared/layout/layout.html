@@ -1,0 +1,31 @@
+<header
+    #header
+    class="fixed top-0 inset-x-0 z-100 flex flex-wrap gap-2.5 px-4 py-3 sm:flex-nowrap sm:gap-0 sm:py-0 sm:px-[clamp(16px,3vw,40px)] sm:h-(--spacing-72) border-b border-gray-100 bg-gray-50/88 backdrop-blur-[20px] backdrop-saturate-[180%] transition-shadow duration-300"
+    [class.shadow-md]="_scrolled()"
+    (window:scroll)="_windowScrolling()"
+>
+    <div class="order-1 sm:order-none shrink-0 font-display text-xl sm:text-2xl font-light tracking-[0.12em] uppercase text-gray-900 select-none flex items-center">
+        Galeri<span class="text-terracotta-500 font-medium">e</span>
+    </div>
+
+    <div class="order-3 sm:order-none flex-1 flex items-center basis-full sm:basis-auto max-w-full sm:max-w-xs lg:max-w-sm mx-auto">
+        <router-outlet name="headerSearch" />
+    </div>
+
+    <div class="order-2 sm:order-none ml-auto sm:ml-0 shrink-0 flex items-center gap-2">
+        <router-outlet name="headerActions" />
+    </div>
+</header>
+
+<main class="pb-20 min-h-screen" [style.padding-top]="_mainPaddingTop()">
+    <div class="w-full max-w-2xl mx-auto px-[clamp(16px,3vw,40px)]">
+        <router-outlet />
+    </div>
+</main>
+
+<footer class="border-t border-gray-100 py-8 px-[clamp(16px,3vw,40px)]">
+    <div class="w-full max-w-2xl mx-auto flex items-center justify-between text-gray-400 text-xs">
+        <span class="font-display text-sm tracking-[0.08em]">Galeri<span class="text-terracotta-500 font-medium">e</span></span>
+        <span>Powered by Art Institute of Chicago API</span>
+    </div>
+</footer>
