@@ -16,18 +16,22 @@ describe('DetailsSkeleton', () => {
         fixture.detectChanges();
     });
 
-    it('should render shimmer placeholders', () => {
-        const shimmers = fixture.nativeElement.querySelectorAll('.shimmer');
-        expect(shimmers.length).toBeGreaterThanOrEqual(3);
+    it('should render skeleton placeholders', () => {
+        const skeletons = fixture.nativeElement.querySelectorAll('app-skeleton');
+        expect(skeletons.length).toBeGreaterThanOrEqual(3);
     });
 
-    it('should render back button placeholder', () => {
-        const backPlaceholder = fixture.nativeElement.querySelector('.size-10.rounded-full');
+    it('should render back button placeholder as circle', () => {
+        const skeletons = fixture.nativeElement.querySelectorAll('app-skeleton');
+        const backPlaceholder = skeletons[0];
         expect(backPlaceholder).toBeTruthy();
+        expect(backPlaceholder.classList.contains('rounded-full')).toBe(true);
     });
 
-    it('should render image placeholder with correct aspect ratio', () => {
-        const imagePlaceholder = fixture.nativeElement.querySelector('.rounded-lg.shimmer');
+    it('should render image placeholder with aspect ratio', () => {
+        const skeletons = fixture.nativeElement.querySelectorAll('app-skeleton');
+        const imagePlaceholder = skeletons[1];
         expect(imagePlaceholder).toBeTruthy();
+        expect(imagePlaceholder.style.aspectRatio).toBe('4 / 3');
     });
 });

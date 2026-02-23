@@ -1,15 +1,17 @@
 import { Component } from '@angular/core';
+import { Skeleton } from '../../../shared/ui/skeleton';
 
 @Component({
     selector: 'app-details-skeleton',
+    imports: [Skeleton],
     template: `
         <div class="max-w-3xl mx-auto">
             <div class="mb-6">
-                <div class="size-10 rounded-full shimmer animate-shimmer"></div>
+                <app-skeleton width="2.5rem" height="2.5rem" [circle]="true" />
             </div>
-            <div class="rounded-lg shimmer animate-shimmer aspect-[4/3] mb-7"></div>
-            <div class="h-8 w-2/3 rounded shimmer animate-shimmer mb-3"></div>
-            <div class="h-5 w-1/3 rounded shimmer animate-shimmer mb-6"></div>
+            <app-skeleton class="mb-7" aspectRatio="4 / 3" />
+            <app-skeleton class="mb-3" height="2rem" width="66%" />
+            <app-skeleton class="mb-6" height="1.25rem" width="33%" />
         </div>
     `,
 })

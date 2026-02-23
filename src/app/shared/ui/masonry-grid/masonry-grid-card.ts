@@ -1,22 +1,20 @@
 import { NgOptimizedImage } from '@angular/common';
 import { Component, computed, input, output } from '@angular/core';
 import { HeartIcon } from '../heart-icon';
+import { Skeleton } from '../skeleton';
 
 @Component({
     selector: 'app-masonry-grid-card',
-    imports: [NgOptimizedImage, HeartIcon],
+    imports: [NgOptimizedImage, HeartIcon, Skeleton],
     host: {
         class: 'block absolute top-0 left-0',
     },
     template: `
         @if (loading()) {
             <div class="rounded-lg bg-white shadow-sm overflow-hidden">
-                <div
-                    class="shimmer bg-gray-200 animate-shimmer"
-                    [style.aspect-ratio]="_aspectRatio()"
-                ></div>
+                <app-skeleton [aspectRatio]="_aspectRatio()" />
                 <div class="px-4 pt-3.5 pb-4">
-                    <div class="shimmer h-4 w-3/4 rounded bg-gray-200 animate-shimmer"></div>
+                    <app-skeleton height="1rem" width="75%" />
                 </div>
             </div>
         } @else {
