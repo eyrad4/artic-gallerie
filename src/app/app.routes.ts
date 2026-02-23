@@ -4,7 +4,7 @@ import { FavoritesButton } from './shared/features/favorites-button/favorites-bu
 import { SearchBar } from './shared/features/search-bar/search-bar';
 import { Layout } from './shared/layout/layout';
 
-const numericIdGuard = (route: import('@angular/router').ActivatedRouteSnapshot) => /^\d+$/.test(route.params['id']);
+const numericIdGuard = (route: import('@angular/router').ActivatedRouteSnapshot) => /^\d+$/.test(route?.params?.['id']);
 
 export const routes: Routes = [
     {

@@ -79,7 +79,7 @@ describe('FavoritesButton', () => {
         it('should render badge when count becomes 1', () => {
             addItems(1);
             expect(badgeEl()).toBeTruthy();
-            expect(badgeEl()!.textContent!.trim()).toBe('1');
+            expect(badgeEl()?.textContent?.trim()).toBe('1');
         });
 
         it('should hide badge when count returns to 0 from positive', () => {
@@ -94,17 +94,17 @@ describe('FavoritesButton', () => {
     describe('badge displays correct count', () => {
         it('should show correct count for multiple items', () => {
             addItems(3);
-            expect(badgeEl()!.textContent!.trim()).toBe('3');
+            expect(badgeEl()?.textContent?.trim()).toBe('3');
         });
 
         it('should update badge text reactively when count changes', () => {
             addItems(3);
-            expect(badgeEl()!.textContent!.trim()).toBe('3');
+            expect(badgeEl()?.textContent?.trim()).toBe('3');
 
             favorites.upsert(mockCard(10));
             favorites.upsert(mockCard(11));
             fixture.detectChanges();
-            expect(badgeEl()!.textContent!.trim()).toBe('5');
+            expect(badgeEl()?.textContent?.trim()).toBe('5');
         });
     });
 

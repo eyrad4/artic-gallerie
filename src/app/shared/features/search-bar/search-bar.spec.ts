@@ -86,7 +86,7 @@ describe('SearchBar', () => {
         });
 
         it('should not fire multiple callbacks from rapid sequential inputs', () => {
-            const transitionsToHidden = 0;
+            const _transitionsToHidden = 0;
 
             for (let i = 0; i < 10; i++) {
                 typeChar();
