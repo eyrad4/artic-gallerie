@@ -1,10 +1,10 @@
 import { afterNextRender, Component, computed, DestroyRef, ElementRef, inject, signal, viewChild } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { WINDOW } from '../common/web-apis/window';
 
 @Component({
     selector: 'app-layout',
-    imports: [RouterOutlet],
+    imports: [RouterLink, RouterOutlet],
     templateUrl: './layout.html',
     styles: [
         `

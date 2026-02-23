@@ -4,9 +4,9 @@
     [class.shadow-md]="_scrolled()"
     (window:scroll)="_windowScrolling()"
 >
-    <div class="order-1 sm:order-none shrink-0 font-display text-xl sm:text-2xl font-light tracking-[0.12em] uppercase text-gray-900 select-none flex items-center">
+    <a routerLink="/" class="order-1 sm:order-none shrink-0 font-display text-xl sm:text-2xl font-light tracking-[0.12em] uppercase text-gray-900 select-none flex items-center no-underline">
         Galeri<span class="text-terracotta-500 font-medium">e</span>
-    </div>
+    </a>
 
     <div class="order-3 sm:order-none flex-1 flex items-center basis-full sm:basis-auto max-w-full sm:max-w-xs lg:max-w-sm mx-auto">
         <router-outlet name="headerSearch" />
