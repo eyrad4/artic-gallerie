@@ -1,4 +1,5 @@
 import { Component, ElementRef, inject, signal, viewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { SearchQueryService } from '../../data/search-query';
 
 @Component({
@@ -31,6 +32,7 @@ import { SearchQueryService } from '../../data/search-query';
 export class SearchBar {
     private readonly _searchInput = viewChild.required<ElementRef<HTMLInputElement>>('searchInput');
 
+    private readonly _router = inject(Router);
     private readonly _searchQuery = inject(SearchQueryService);
 
     private _timeoutId: ReturnType<typeof setTimeout> | undefined;
@@ -43,7 +45,13 @@ export class SearchBar {
         this._timeoutId = setTimeout(() => {
             this._loading.set(false);
             const value = this._searchInput().nativeElement.value.trim();
-            this._searchQuery.query.set(value);
+            if (this._router.url !== '/') {
+                this._router.navigateByUrl('/').then(() => {
+                    this._searchQuery.query.set(value);
+                });
+            } else {
+                this._searchQuery.query.set(value);
+            }
         }, 500);
     }
 }
