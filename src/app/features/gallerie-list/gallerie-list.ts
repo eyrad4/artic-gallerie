@@ -34,7 +34,7 @@ import { GallerieListData } from './data-access/gallerie-list-data';
             </div>
         } @else {
             <app-masonry-grid>
-                @for (artwork of _artworkList.artworks(); track artwork.id) {
+                @for (artwork of _artworkList.artworks(); track artwork.id; let index = $index) {
                     <app-masonry-grid-card
                         [id]="artwork.id"
                         [title]="artwork.title"
@@ -44,6 +44,7 @@ import { GallerieListData } from './data-access/gallerie-list-data';
                         [lqip]="artwork.lqip"
                         [imageWidth]="artwork.thumbnailWidth"
                         [imageHeight]="artwork.thumbnailHeight"
+                        [priority]="index < 4"
                         [favorite]="_favorites.ids().has(artwork.id)"
                         (cardClick)="_openArtwork(artwork.id)"
                         (favoriteToggle)="_favorites.upsert(artwork)"

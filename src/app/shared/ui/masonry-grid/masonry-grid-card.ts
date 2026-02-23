@@ -29,6 +29,7 @@ import { HeartIcon } from '../heart-icon';
                         [ngSrc]="imageUrl()"
                         [alt]="title()"
                         fill
+                        [priority]="priority()"
                         style="object-fit: cover"
                         [style.background]="lqip() ? 'url(' + lqip() + ') center/cover' : null"
                         (load)="imageLoaded.emit()"
@@ -123,6 +124,8 @@ export class MasonryGridCard {
     readonly imageHeight = input<number>();
 
     readonly loading = input(false);
+
+    readonly priority = input(false);
 
     readonly cardClick = output<void>();
 
