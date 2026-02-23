@@ -4,6 +4,8 @@ import { FavoritesButton } from './shared/features/favorites-button/favorites-bu
 import { SearchBar } from './shared/features/search-bar/search-bar';
 import { Layout } from './shared/layout/layout';
 
+const numericIdGuard = (route: import('@angular/router').ActivatedRouteSnapshot) => /^\d+$/.test(route.params['id']);
+
 export const routes: Routes = [
     {
         path: '',
@@ -18,7 +20,12 @@ export const routes: Routes = [
             },
             {
                 path: ':id',
+                canActivate: [numericIdGuard],
                 loadComponent: () => import('./features/gallerie-details/gallerie-details').then((c) => c.GallerieDetails),
+            },
+            {
+                path: '**',
+                loadComponent: () => import('./shared/ui/not-found').then((c) => c.NotFound),
             },
         ],
     },
