@@ -1,15 +1,18 @@
 import { TestBed } from '@angular/core/testing';
-import type { ArticArtworkListItem } from '../rest/artic-client/artic-list';
+
+import type { ArtworkCard } from '../models/artwork-card';
 import { Favorites } from './favorites';
 
-const mockItem = (id: number): ArticArtworkListItem => ({
+const mockItem = (id: number): ArtworkCard => ({
     id,
     title: `Artwork ${id}`,
-    image_id: `img-${id}`,
-    thumbnail: null,
-    artist_title: null,
-    date_display: null,
-    medium_display: null,
+    artist: 'Artist',
+    subtitle: '',
+    imageUrl: '',
+    lqip: undefined,
+    categories: '',
+    thumbnailWidth: undefined,
+    thumbnailHeight: undefined,
 });
 
 describe('Favorites', () => {

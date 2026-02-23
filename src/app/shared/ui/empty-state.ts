@@ -16,5 +16,6 @@ import { Component, input } from '@angular/core';
 })
 export class EmptyState {
     readonly message = input.required<string>();
+
     readonly subtitle = input<string>();
 }

@@ -1,10 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { Favorites } from '../../data/favorites';
+import { ArtworkCard } from '../../models/artwork-card';
 import { FavoritesButton } from './favorites-button';
+
+const mockCard = (id: number): ArtworkCard => ({
+    id,
+    title: `Art ${id}`,
+    artist: 'Artist',
+    subtitle: '',
+    imageUrl: '',
+    lqip: undefined,
+    categories: '',
+    thumbnailWidth: undefined,
+    thumbnailHeight: undefined,
+});
 
 describe('FavoritesButton', () => {
     let fixture: ComponentFixture<FavoritesButton>;
-    let component: FavoritesButton;
+    let favorites: Favorites;
 
     beforeEach(async () => {
         TestBed.resetTestingModule();
@@ -14,8 +27,8 @@ describe('FavoritesButton', () => {
             teardown: { destroyAfterEach: true },
         }).compileComponents();
 
+        favorites = TestBed.inject(Favorites);
         fixture = TestBed.createComponent(FavoritesButton);
-        component = fixture.componentInstance;
         fixture.detectChanges();
     });
 
@@ -27,26 +40,28 @@ describe('FavoritesButton', () => {
         fixture.detectChanges();
     }
 
+    function addItems(count: number): void {
+        for (let i = 0; i < count; i++) {
+            favorites.upsert(mockCard(i + 1));
+        }
+        fixture.detectChanges();
+    }
+
+    function clearAll(count: number): void {
+        for (let i = 0; i < count; i++) {
+            favorites.upsert(mockCard(i + 1));
+        }
+        fixture.detectChanges();
+    }
+
     describe('toggle state consistency', () => {
         it('should start inactive', () => {
             expect(buttonEl().classList.contains('border-terracotta-500')).toBe(false);
             expect(buttonEl().classList.contains('text-terracotta-500')).toBe(false);
         });
 
-        it('should become active after one click', () => {
-            click();
-            expect(buttonEl().classList.contains('border-terracotta-500')).toBe(true);
-            expect(buttonEl().classList.contains('text-terracotta-500')).toBe(true);
-        });
-
-        it('should deactivate after two clicks (toggle back)', () => {
-            click();
-            click();
-            expect(buttonEl().classList.contains('border-terracotta-500')).toBe(false);
-            expect(buttonEl().classList.contains('text-terracotta-500')).toBe(false);
-        });
-
         it('should keep border and text classes in sync — never one without the other', () => {
+            addItems(1);
             for (let i = 0; i < 20; i++) {
                 click();
                 const hasBorder = buttonEl().classList.contains('border-terracotta-500');
@@ -56,81 +71,63 @@ describe('FavoritesButton', () => {
         });
     });
 
-    describe('rapid double-click does not desync', () => {
-        it('should handle rapid even number of clicks — returns to inactive', () => {
-            for (let i = 0; i < 6; i++) {
-                click();
-            }
-            expect(buttonEl().classList.contains('border-terracotta-500')).toBe(false);
-        });
-
-        it('should handle rapid odd number of clicks — ends active', () => {
-            for (let i = 0; i < 7; i++) {
-                click();
-            }
-            expect(buttonEl().classList.contains('border-terracotta-500')).toBe(true);
-        });
-    });
-
     describe('badge visibility boundary', () => {
         it('should not render badge when count is 0', () => {
             expect(badgeEl()).toBeNull();
         });
 
         it('should render badge when count becomes 1', () => {
-            component['_count'].set(1);
-            fixture.detectChanges();
+            addItems(1);
             expect(badgeEl()).toBeTruthy();
             expect(badgeEl()!.textContent!.trim()).toBe('1');
         });
 
         it('should hide badge when count returns to 0 from positive', () => {
-            component['_count'].set(5);
-            fixture.detectChanges();
+            addItems(5);
             expect(badgeEl()).toBeTruthy();
 
-            component['_count'].set(0);
-            fixture.detectChanges();
-            expect(badgeEl()).toBeNull();
-        });
-
-        it('should not render badge for negative count (defensive)', () => {
-            component['_count'].set(-1);
-            fixture.detectChanges();
+            clearAll(5);
             expect(badgeEl()).toBeNull();
         });
     });
 
     describe('badge displays correct count', () => {
-        it('should show exact count for large numbers', () => {
-            component['_count'].set(999);
-            fixture.detectChanges();
-            expect(badgeEl()!.textContent!.trim()).toBe('999');
+        it('should show correct count for multiple items', () => {
+            addItems(3);
+            expect(badgeEl()!.textContent!.trim()).toBe('3');
         });
 
         it('should update badge text reactively when count changes', () => {
-            component['_count'].set(3);
-            fixture.detectChanges();
+            addItems(3);
             expect(badgeEl()!.textContent!.trim()).toBe('3');
 
-            component['_count'].set(7);
+            favorites.upsert(mockCard(10));
+            favorites.upsert(mockCard(11));
             fixture.detectChanges();
-            expect(badgeEl()!.textContent!.trim()).toBe('7');
+            expect(badgeEl()!.textContent!.trim()).toBe('5');
         });
     });
 
     describe('active state and badge are independent', () => {
-        it('should allow active=true with count=0 (no badge but highlighted)', () => {
-            click();
-            expect(buttonEl().classList.contains('border-terracotta-500')).toBe(true);
+        it('should show no badge when count is 0', () => {
             expect(badgeEl()).toBeNull();
         });
 
-        it('should allow active=false with count>0 (badge but not highlighted)', () => {
-            component['_count'].set(3);
-            fixture.detectChanges();
+        it('should show badge when items exist', () => {
+            addItems(3);
             expect(buttonEl().classList.contains('border-terracotta-500')).toBe(false);
             expect(badgeEl()).toBeTruthy();
+        });
+    });
+
+    describe('disabled state', () => {
+        it('should be disabled when there are no favorites', () => {
+            expect(buttonEl().disabled).toBe(true);
+        });
+
+        it('should be enabled when there are favorites', () => {
+            addItems(1);
+            expect(buttonEl().disabled).toBe(false);
         });
     });
 
