@@ -1,4 +1,5 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { Favorites } from '../../data/favorites';
 
 @Component({
     selector: 'app-favorites-button',
@@ -27,9 +28,11 @@ import { Component, signal } from '@angular/core';
     `,
 })
 export class FavoritesButton {
+    private readonly _favorites = inject(Favorites);
+
     protected readonly _active = signal(false);
 
-    protected readonly _count = signal(0);
+    protected readonly _count = this._favorites.count;
 
     protected _toFavorites(): void {
         // TODO: link to favorites page
