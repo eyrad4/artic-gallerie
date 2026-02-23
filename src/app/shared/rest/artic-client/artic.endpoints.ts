@@ -7,7 +7,7 @@ import { ArticArtworksSearchParams, ArticArtworksSearchResponse } from './artic-
 export type ArticEndpointMap = {
     artworks: { response: ArticArtworksResponse; params: ArticArtworksParams };
     'artworks/search': { response: ArticArtworksSearchResponse; params: ArticArtworksSearchParams };
-    'artworks/:id': { response: ArticArtworkResponse; params: { id: number } };
+    'artworks/:id': { response: ArticArtworkResponse; params: { id: number; fields?: string[] } };
 };
 
 export const ARTIC_BASE_URL = new InjectionToken<string>('ARTIC_BASE_URL', {

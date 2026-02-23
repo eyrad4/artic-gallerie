@@ -5,6 +5,7 @@ export interface ArtworkCard {
     subtitle: string;
     imageUrl: string;
     lqip: string | undefined;
+    categories: string;
     thumbnailWidth: number | undefined;
     thumbnailHeight: number | undefined;
 }

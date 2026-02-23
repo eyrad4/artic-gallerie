@@ -16,6 +16,10 @@ export const routes: Routes = [
                 path: 'favorites',
                 loadComponent: () => import('./features/favorite-list/favorite-list').then((c) => c.FavoriteList),
             },
+            {
+                path: ':id',
+                loadComponent: () => import('./features/gallerie-details/gallerie-details').then((c) => c.GallerieDetails),
+            },
         ],
     },
 ];

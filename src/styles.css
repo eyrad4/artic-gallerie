@@ -40,8 +40,11 @@
     --spacing-5: 5px;
     --spacing-6: 6px;
     --spacing-8: 8px;
+    --spacing-11: 11px;
     --spacing-14: 14px;
+    --spacing-16: 16px;
     --spacing-18: 18px;
+    --spacing-22: 22px;
     --spacing-72: 72px;
 
     --breakpoint-xs: 30rem;
@@ -60,6 +63,11 @@
     100% {
         background-position: 400px 0;
     }
+}
+
+@utility shimmer {
+    background: linear-gradient(90deg, var(--color-gray-200) 25%, var(--color-gray-100) 50%, var(--color-gray-200) 75%);
+    background-size: 800px 100%;
 }
 
 @layer base {
