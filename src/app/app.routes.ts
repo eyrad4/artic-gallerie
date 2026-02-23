@@ -1,10 +1,13 @@
-import type { Routes } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivateFn, Routes } from '@angular/router';
 import { GallerieList } from './features/gallerie-list/gallerie-list';
 import { FavoritesButton } from './shared/features/favorites-button/favorites-button';
 import { SearchBar } from './shared/features/search-bar/search-bar';
 import { Layout } from './shared/layout/layout';
 
-const numericIdGuard = (route: import('@angular/router').ActivatedRouteSnapshot) => /^\d+$/.test(route?.params?.['id']);
+export const numericIdGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
+    const { id } = route.params ?? {};
+    return /^\d+$/.test(id);
+};
 
 export const routes: Routes = [
     {

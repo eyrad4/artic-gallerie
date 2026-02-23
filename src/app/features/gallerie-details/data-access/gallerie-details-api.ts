@@ -44,7 +44,13 @@ export class GallerieDetailsApi {
 
     detailsResource = (id: Signal<number | undefined>) =>
         rxResource<ArtworkDetails, number | undefined>({
-            params: () => id(),
+            params: () => {
+                const rawId = id();
+                if (!rawId || !/^\d+$/.test(rawId.toString())) {
+                    return undefined;
+                }
+                return Number(rawId);
+            },
             stream: ({ params }) => {
                 if (!params || Number.isNaN(params)) {
                     return NEVER;
