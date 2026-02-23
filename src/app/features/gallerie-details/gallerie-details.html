@@ -18,7 +18,7 @@
             </button>
         </div>
 
-        @if (artwork.imageUrl) {
+        @if (artwork.imageUrl && !_imageError()) {
             <div class="relative mb-7 overflow-hidden rounded-lg shadow-md aspect-4/3">
                 <img
                     class="object-contain"
@@ -28,8 +28,11 @@
                     [style.background]="artwork.lqip ? 'url(' + artwork.lqip + ') center/cover' : null"
                     fill
                     priority
+                    (error)="_imageError.set(true)"
                 />
             </div>
+        } @else {
+            <app-image-placeholder class="block mb-7 rounded-lg overflow-hidden aspect-4/3" />
         }
 
         <h1 class="font-display text-[clamp(1.6rem,3vw,2rem)] font-normal leading-tight text-gray-900 mb-1.5">

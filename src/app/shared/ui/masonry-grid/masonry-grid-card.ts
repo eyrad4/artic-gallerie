@@ -1,11 +1,12 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, computed, input, output } from '@angular/core';
+import { Component, computed, input, output, signal } from '@angular/core';
 import { HeartIcon } from '../heart-icon';
+import { ImagePlaceholder } from '../image-placeholder';
 import { Skeleton } from '../skeleton';
 
 @Component({
     selector: 'app-masonry-grid-card',
-    imports: [NgOptimizedImage, HeartIcon, Skeleton],
+    imports: [NgOptimizedImage, HeartIcon, ImagePlaceholder, Skeleton],
     host: {
         class: 'block absolute top-0 left-0',
     },
@@ -23,16 +24,21 @@ import { Skeleton } from '../skeleton';
                     class="relative overflow-hidden bg-gray-100"
                     [style.aspect-ratio]="_aspectRatio()"
                 >
-                    <img
-                        [ngSrc]="imageUrl()"
-                        alt=""
-                        [alt]="title()"
-                        fill
-                        [priority]="priority()"
-                        style="object-fit: cover"
-                        [style.background]="lqip() ? 'url(' + lqip() + ') center/cover' : null"
-                        (load)="imageLoaded.emit()"
-                    />
+                    @if (_imageError()) {
+                        <app-image-placeholder />
+                    } @else {
+                        <img
+                            [ngSrc]="imageUrl()"
+                            alt=""
+                            [alt]="title()"
+                            fill
+                            [priority]="priority()"
+                            style="object-fit: cover"
+                            [style.background]="lqip() ? 'url(' + lqip() + ') center/cover' : null"
+                            (load)="imageLoaded.emit()"
+                            (error)="_imageError.set(true)"
+                        />
+                    }
                     <button
                         class="fav-btn absolute top-2.5 right-2.5 size-[34px] rounded-full bg-white/90 border-none cursor-pointer flex items-center justify-center opacity-0 scale-[0.8] group-hover:opacity-100 group-hover:scale-100 transition-[opacity,transform,background] duration-250 ease-spring z-2"
                         [class.active]="favorite()"
@@ -92,6 +98,8 @@ export class MasonryGridCard {
         const h = this.imageHeight();
         return w && h ? `${w} / ${h}` : '3 / 4';
     });
+
+    protected readonly _imageError = signal(false);
 
     protected _favoriteClick(event: Event): void {
         event.stopPropagation();

@@ -179,6 +179,23 @@ describe('MasonryGridCard', () => {
         });
     });
 
+    describe('image error', () => {
+        it('should show placeholder when image fails to load', () => {
+            imgEl()?.dispatchEvent(new Event('error'));
+            fixture.detectChanges();
+
+            expect(imgEl()).toBeNull();
+            expect(fixture.nativeElement.querySelector('app-image-placeholder')).toBeTruthy();
+        });
+
+        it('should keep card content visible when image fails', () => {
+            imgEl()?.dispatchEvent(new Event('error'));
+            fixture.detectChanges();
+
+            expect(titleEl()?.textContent?.trim()).toBe('Starry Night');
+        });
+    });
+
     describe('priority', () => {
         it('should not set fetchpriority by default', () => {
             expect(imgEl()?.getAttribute('fetchpriority')).not.toBe('high');

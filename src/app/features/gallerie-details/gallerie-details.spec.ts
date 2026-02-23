@@ -293,5 +293,23 @@ describe('GallerieDetails', () => {
             const img = el().querySelector('img');
             expect(img).toBeNull();
         });
+
+        it('should show placeholder when imageUrl is empty', () => {
+            mockResource.setValue(mockArtwork({ imageUrl: '' }));
+            fixture.detectChanges();
+
+            expect(el().querySelector('app-image-placeholder')).toBeTruthy();
+        });
+
+        it('should show placeholder when image fails to load', () => {
+            const img = el().querySelector('img') as HTMLImageElement;
+            expect(img).toBeTruthy();
+
+            img.dispatchEvent(new Event('error'));
+            fixture.detectChanges();
+
+            expect(el().querySelector('img')).toBeNull();
+            expect(el().querySelector('app-image-placeholder')).toBeTruthy();
+        });
     });
 });

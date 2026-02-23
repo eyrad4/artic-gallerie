@@ -1,9 +1,10 @@
 import { Location, NgOptimizedImage } from '@angular/common';
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Favorites } from '../../shared/data/favorites';
 import { HeartIcon } from '../../shared/ui/heart-icon';
+import { ImagePlaceholder } from '../../shared/ui/image-placeholder';
 import { buildArtworkSubtitle } from '../../shared/utils/build-artwork-subtitle';
 import { GallerieDetailsApi } from './data-access/gallerie-details-api';
 import { DetailsError } from './ui/details-error';
@@ -11,7 +12,7 @@ import { DetailsSkeleton } from './ui/details-skeleton';
 
 @Component({
     selector: 'app-gallerie-details',
-    imports: [NgOptimizedImage, HeartIcon, DetailsSkeleton, DetailsError],
+    imports: [NgOptimizedImage, HeartIcon, ImagePlaceholder, DetailsSkeleton, DetailsError],
     templateUrl: './gallerie-details.html',
     styles: `
         :host {
@@ -37,6 +38,8 @@ export class GallerieDetails {
     readonly id = input.required({ transform: (value: string) => Number(value) });
 
     readonly gallerieDetails = this._gallerieDetailsApi.detailsResource(this.id);
+
+    protected readonly _imageError = signal(false);
 
     protected _goBack(): void {
         if (window.history.length > 1) {
