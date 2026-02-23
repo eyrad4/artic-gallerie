@@ -1,14 +1,13 @@
-export interface ArticThumbnail {
-    lqip: string;
-    width: number;
-    height: number;
-    alt_text: string | null;
-}
+import { ArticThumbnail } from './artic-thumbnail';
 
 export interface ArticArtwork {
     id: number;
     title: string;
+    image_id: string | null;
     thumbnail: ArticThumbnail | null;
+    artist_title: string | null;
+    date_display: string | null;
+    medium_display: string | null;
 }
 
 export interface ArticArtworkResponse {

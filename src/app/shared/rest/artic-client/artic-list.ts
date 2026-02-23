@@ -1,4 +1,4 @@
-import { ArticArtwork } from './artic-details';
+import { ArticThumbnail } from './artic-thumbnail';
 
 export interface ArticPagination {
     total: number;
@@ -9,9 +9,19 @@ export interface ArticPagination {
     next_url: string | null;
 }
 
+export interface ArticArtworkListItem {
+    id: number;
+    title: string;
+    image_id: string | null;
+    thumbnail: ArticThumbnail | null;
+    artist_title: string | null;
+    date_display: string | null;
+    medium_display: string | null;
+}
+
 export interface ArticArtworksResponse {
     pagination: ArticPagination;
-    data: ArticArtwork[];
+    data: ArticArtworkListItem[];
     config: { iiif_url: string; website_url: string };
 }
 
