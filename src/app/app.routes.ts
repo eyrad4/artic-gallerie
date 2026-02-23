@@ -12,6 +12,10 @@ export const routes: Routes = [
             { path: '', component: SearchBar, outlet: 'headerSearch' },
             { path: '', component: FavoritesButton, outlet: 'headerActions' },
             { path: '', component: GallerieList },
+            {
+                path: 'favorites',
+                loadComponent: () => import('./features/favorite-list/favorite-list').then((c) => c.FavoriteList),
+            },
         ],
     },
 ];
