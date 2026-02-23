@@ -172,7 +172,7 @@ describe('AbstractRestQueryClient', () => {
             httpTesting.expectOne(matchUrl('https://api.test.com/items')).flush([]);
         });
 
-        it('should not store response when cache: false', () => {
+        it('should not state response when cache: false', () => {
             client.get('items', { page: 1 }, { cache: false }).subscribe();
             httpTesting.expectOne(matchUrl('https://api.test.com/items')).flush([{ id: 1, name: 'A' }]);
 
