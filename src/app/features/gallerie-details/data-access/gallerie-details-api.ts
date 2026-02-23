@@ -1,6 +1,6 @@
 import { Injectable, inject, Signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs';
+import { map, NEVER } from 'rxjs';
 import { ArticClient } from '../../../shared/rest/artic-client/artic.client';
 import { ArticArtworkResponse } from '../../../shared/rest/artic-client/artic-details';
 import { buildIiifImageUrl } from '../../../shared/utils/build-iiif-image-url';
@@ -46,8 +46,8 @@ export class GallerieDetailsApi {
         rxResource<ArtworkDetails, number | undefined>({
             params: () => id(),
             stream: ({ params }) => {
-                if (!params) {
-                    new Error('Param id must be exist');
+                if (!params || Number.isNaN(params)) {
+                    return NEVER;
                 }
 
                 return this._artic

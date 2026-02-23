@@ -24,11 +24,13 @@ const GAP = 20;
 })
 export class MasonryGrid {
     private readonly _container = viewChild.required<ElementRef<HTMLElement>>('container');
+
     private readonly _destroyRef = inject(DestroyRef);
 
     protected readonly _containerHeight = signal(0);
 
     private _rafId: number | null = null;
+
     private _prevWidth = 0;
 
     constructor() {
