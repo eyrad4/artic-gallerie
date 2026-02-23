@@ -45,7 +45,6 @@ export class FavoritesButton {
     );
 
     protected readonly _active = computed(() => {
-        console.log(this._currentUrl());
         return this._currentUrl() === '/favorites';
     });
 
