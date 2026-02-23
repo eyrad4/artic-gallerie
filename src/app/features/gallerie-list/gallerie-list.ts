@@ -1,6 +1,7 @@
 import { Component, DestroyRef, ElementRef, effect, inject, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Favorites } from '../../shared/data/favorites';
+import { EmptyState } from '../../shared/ui/empty-state';
 import { MasonryGrid } from '../../shared/ui/masonry-grid/masonry-grid';
 import { MasonryGridCard } from '../../shared/ui/masonry-grid/masonry-grid-card';
 import { GallerieListApi } from './data-access/gallerie-list-api';
@@ -8,7 +9,7 @@ import { GallerieListData } from './data-access/gallerie-list-data';
 
 @Component({
     selector: 'app-gallerie-list',
-    imports: [MasonryGrid, MasonryGridCard],
+    imports: [MasonryGrid, MasonryGridCard, EmptyState],
     providers: [GallerieListData, GallerieListApi],
     template: `
         @if (_artworkList.initialLoading()) {
@@ -25,13 +26,7 @@ import { GallerieListData } from './data-access/gallerie-list-data';
                 }
             </app-masonry-grid>
         } @else if (_artworkList.artworks().length === 0) {
-            <div class="flex flex-col items-center justify-center py-20 text-gray-400">
-                <svg class="size-12 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
-                </svg>
-                <p class="font-display text-lg">No artworks found</p>
-                <p class="text-sm mt-1">Try a different search term</p>
-            </div>
+            <app-empty-state message="No artworks found" subtitle="Try a different search term" />
         } @else {
             <app-masonry-grid>
                 @for (artwork of _artworkList.artworks(); track artwork.id; let index = $index) {
@@ -42,6 +37,7 @@ import { GallerieListData } from './data-access/gallerie-list-data';
                         [subtitle]="artwork.subtitle"
                         [imageUrl]="artwork.imageUrl"
                         [lqip]="artwork.lqip"
+                        [categories]="artwork.categories"
                         [imageWidth]="artwork.thumbnailWidth"
                         [imageHeight]="artwork.thumbnailHeight"
                         [priority]="index < 4"

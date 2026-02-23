@@ -17,6 +17,7 @@ export interface ArticArtworkListItem {
     artist_title: string | null;
     date_display: string | null;
     medium_display: string | null;
+    category_titles: string[] | null;
 }
 
 export interface ArticArtworksResponse {

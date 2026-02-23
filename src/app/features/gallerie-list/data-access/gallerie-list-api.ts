@@ -4,7 +4,8 @@ import { map, Observable } from 'rxjs';
 import { ArtworkCard } from '../../../shared/models/artwork-card';
 import { ArticClient } from '../../../shared/rest/artic-client/artic.client';
 import { ArticArtworkListItem } from '../../../shared/rest/artic-client/artic-list';
-import { transformToArtworkCard } from '../../../shared/utils/tranform-to-artwork-card';
+import { buildArtworkSubtitle } from '../../../shared/utils/build-artwork-subtitle';
+import { buildIiifImageUrl } from '../../../shared/utils/build-iiif-image-url';
 
 export interface PageResult {
     items: ArtworkCard[];
@@ -14,7 +15,7 @@ export interface PageResult {
 
 const PAGE_LIMIT = 20;
 
-const FIELDS = ['id', 'title', 'image_id', 'thumbnail', 'artist_title', 'date_display', 'medium_display'];
+const FIELDS = ['id', 'title', 'image_id', 'thumbnail', 'artist_title', 'date_display', 'medium_display', 'category_titles'];
 
 @Injectable()
 export class GallerieListApi {
@@ -30,10 +31,25 @@ export class GallerieListApi {
             map((res) => ({
                 items: res.data
                     .filter((item: ArticArtworkListItem) => item.image_id !== null)
-                    .map((item: ArticArtworkListItem) => transformToArtworkCard(item, res.config.iiif_url)),
+                    .map((item: ArticArtworkListItem) => this._transformToArtworkCard(item, res.config.iiif_url)),
                 totalPages: res.pagination.total_pages,
                 currentPage: res.pagination.current_page,
             })),
         );
+    }
+
+    private _transformToArtworkCard(data: ArticArtworkListItem, iiifUrl: string): ArtworkCard {
+        const subtitle = buildArtworkSubtitle(data.date_display ?? '', data.medium_display ?? '');
+        return {
+            id: data.id,
+            title: data.title,
+            artist: data.artist_title ?? 'Unknown artist',
+            subtitle,
+            categories: data.category_titles ? data.category_titles.join(', ') : '',
+            imageUrl: buildIiifImageUrl(iiifUrl, data.image_id),
+            lqip: data.thumbnail?.lqip ?? undefined,
+            thumbnailWidth: data.thumbnail?.width ?? undefined,
+            thumbnailHeight: data.thumbnail?.height ?? undefined,
+        };
     }
 }

@@ -27,6 +27,7 @@ import { HeartIcon } from '../heart-icon';
                 >
                     <img
                         [ngSrc]="imageUrl()"
+                        alt=""
                         [alt]="title()"
                         fill
                         [priority]="priority()"
@@ -43,8 +44,7 @@ import { HeartIcon } from '../heart-icon';
                         <app-heart-icon class="size-4 text-gray-500 transition-[color,transform] duration-200 ease-spring hover:scale-[1.15]" [filled]="favorite()" fillColor="white" />
                     </button>
                     <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-4 pb-3.5 pt-12 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-[opacity,transform] duration-300">
-                        <div class="font-display text-base font-medium leading-tight text-white">{{ title() }}</div>
-                        <div class="text-xs text-white/75 mt-3 tracking-[0.02em]">{{ artist() }}</div>
+                        <div class="text-xs text-white/75 mt-3 tracking-[0.02em]">{{ categories() }}</div>
                     </div>
                 </div>
                 <div class="px-4 pt-3 pb-3">
@@ -58,11 +58,6 @@ import { HeartIcon } from '../heart-icon';
         }
     `,
     styles: `
-        .shimmer {
-            background: linear-gradient(90deg, var(--color-gray-200) 25%, var(--color-gray-100) 50%, var(--color-gray-200) 75%);
-            background-size: 800px 100%;
-        }
-
         .card {
             position: relative;
 
@@ -126,6 +121,8 @@ export class MasonryGridCard {
     readonly loading = input(false);
 
     readonly priority = input(false);
+
+    readonly categories = input<string>();
 
     readonly cardClick = output<void>();
 
