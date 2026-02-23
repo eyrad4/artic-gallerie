@@ -1,11 +1,11 @@
 import { computed, Injectable, signal } from '@angular/core';
-import { ArticArtworkListItem } from '../rest/artic-client/artic-list';
+import { ArtworkCard } from '../models/artwork-card';
 
 @Injectable({
     providedIn: 'root',
 })
 export class Favorites {
-    private readonly _state = signal(new Map<number, ArticArtworkListItem>());
+    private readonly _state = signal(new Map<number, ArtworkCard>());
 
     readonly items = computed(() => [...this._state().values()]);
 
@@ -17,7 +17,7 @@ export class Favorites {
         return this._state().has(id);
     }
 
-    upsert(item: ArticArtworkListItem): void {
+    upsert(item: ArtworkCard): void {
         this._state.update((map) => {
             const next = new Map(map);
             if (next.has(item.id)) {
