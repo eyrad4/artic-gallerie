@@ -1,59 +1,29 @@
-# ArticGallerie
+# Artic Gallerie
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.0.
+An Angular app for browsing artwork from the [Art Institute of Chicago API](https://api.artic.edu/docs/).
+Browse the collection, search by keyword, view artwork details, and save favorites locally.
 
-## Development server
+## Prerequisites
 
-To start a local development server, run:
+- Node.js >= 20
+- npm
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Getting started
 
 ```bash
-ng generate component component-name
+npm install
+npm start        # http://localhost:4200
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Scripts
 
-```bash
-ng generate --help
-```
+| Command         | Description              |
+| --------------- | ------------------------ |
+| `npm start`     | Start dev server         |
+| `npm test`      | Run unit tests (Vitest)  |
+| `npm run build` | Production build → `dist/` |
+| `npm run fmt`   | Format & lint (Biome)    |
 
-## Building
+## Tech stack
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Angular 21 &middot; Tailwind CSS 4 &middot; Vitest &middot; Biome &middot; Lefthook
